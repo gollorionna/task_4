@@ -6,26 +6,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema, type FormValues } from "../utils/types";
 
+
 export const LoginPage = () => {
+	const API_URL = import.meta.env.REACT_APP_API_URL || "https://dummyjson.com";
 	const methods = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: "onChange"
-  });
-
-const fakeApi = (
-  data: FormValues
-): Promise<FormValues> =>
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (data.email === "test@test.com") {
-        reject({
-          field: "email" as keyof FormValues,
-          message: "Email уже зарегистрирован"
-        });
-      } else {
-        resolve(data);
-      }
-    }, 1000);
   });
 
   const {
@@ -36,32 +22,36 @@ const fakeApi = (
     formState: { errors, isValid, isSubmitting }
   } = methods;
 
-  type ServerError = {
-  field: keyof FormValues;
-  message: string;
-};
-
-function isServerError(error: unknown): error is ServerError {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "field" in error &&
-    "message" in error
-  );
-}
 
 const onSubmit = async (data: FormValues) => {
   try {
-    await fakeApi(data);
-    alert("Sent successfully!");
-    reset();
-  } catch (err: unknown) {
-    if (isServerError(err)) {
-      setError(err.field, {
-        type: "server",
-        message: err.message
-      });
+    const response = await fetch(`${API_URL}/users/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        firstName: data.name,
+        email: data.email,
+        password: data.password
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Server error");
     }
+
+    const result = await response.json();
+
+    console.log(result);
+    alert("Registered successfully!");
+    reset();
+
+  } catch (err) {
+    setError("email", {
+      type: "server",
+      message: "Registration failed. Please try again."
+    });
   }
 };
   return (
