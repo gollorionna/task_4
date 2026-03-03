@@ -8,21 +8,30 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ChatRouteImport } from './routes/chat'
-import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 
-const ChatRoute = ChatRouteImport.update({
+const ProductsLazyRouteImport = createFileRoute('/products')()
+const ChatLazyRouteImport = createFileRoute('/chat')()
+const AuthLazyRouteImport = createFileRoute('/auth')()
+
+const ProductsLazyRoute = ProductsLazyRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/products.lazy').then((d) => d.Route))
+const ChatLazyRoute = ChatLazyRouteImport.update({
   id: '/chat',
   path: '/chat',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
+} as any).lazy(() => import('./routes/chat.lazy').then((d) => d.Route))
+const AuthLazyRoute = AuthLazyRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() => import('./routes/auth.lazy').then((d) => d.Route))
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,48 +40,59 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
-  '/chat': typeof ChatRoute
+  '/auth': typeof AuthLazyRoute
+  '/chat': typeof ChatLazyRoute
+  '/products': typeof ProductsLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
-  '/chat': typeof ChatRoute
+  '/auth': typeof AuthLazyRoute
+  '/chat': typeof ChatLazyRoute
+  '/products': typeof ProductsLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
-  '/chat': typeof ChatRoute
+  '/auth': typeof AuthLazyRoute
+  '/chat': typeof ChatLazyRoute
+  '/products': typeof ProductsLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/chat'
+  fullPaths: '/' | '/auth' | '/chat' | '/products'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/chat'
-  id: '__root__' | '/' | '/auth' | '/chat'
+  to: '/' | '/auth' | '/chat' | '/products'
+  id: '__root__' | '/' | '/auth' | '/chat' | '/products'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthRoute: typeof AuthRoute
-  ChatRoute: typeof ChatRoute
+  AuthLazyRoute: typeof AuthLazyRoute
+  ChatLazyRoute: typeof ChatLazyRoute
+  ProductsLazyRoute: typeof ProductsLazyRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chat': {
       id: '/chat'
       path: '/chat'
       fullPath: '/chat'
-      preLoaderRoute: typeof ChatRouteImport
+      preLoaderRoute: typeof ChatLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+      preLoaderRoute: typeof AuthLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -87,8 +107,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthRoute: AuthRoute,
-  ChatRoute: ChatRoute,
+  AuthLazyRoute: AuthLazyRoute,
+  ChatLazyRoute: ChatLazyRoute,
+  ProductsLazyRoute: ProductsLazyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

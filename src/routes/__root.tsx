@@ -25,7 +25,7 @@ function Layout() {
         </Link>
         <nav className="flex">
           <ul className="flex space-x-6 text-black">
-            <li className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block">
+            <li className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block" onClick={() => navigate({ to: '/products' })}>
               All products
             </li>
             <li
