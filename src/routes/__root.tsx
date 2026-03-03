@@ -1,30 +1,50 @@
 import { Link, Outlet, createRootRoute, useNavigate } from '@tanstack/react-router';
 import { Suspense } from 'react';
 import { GiShop } from 'react-icons/gi';
+import { useAuthToken } from '../utils/authQuery';
+import { queryClient } from '../utils/queryClient';
 
 export const Route = createRootRoute({
   component: Layout,
 });
 
 function Layout() {
+  const { data: token } = useAuthToken();
   const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    queryClient.setQueryData(['auth-token'], null);
+    navigate({ to: '/' });
+  };
   return (
     <>
       <header className="absolute top-0 left-0 w-full z-50 flex justify-between items-center h-16 px-5">
         <Link to="/">
-          <GiShop className="text-[#9cd08f] bg-[#684551] rounded-2xs w-12 h-12 hover:underline cursor-pointer hover:text-green-600 hover:transition-colors duration-300"/>
+          <GiShop className="text-[#9cd08f] bg-[#684551] rounded-2xs w-12 h-12 hover:underline cursor-pointer hover:text-green-600 hover:transition-colors duration-300" />
         </Link>
         <nav className="flex">
           <ul className="flex space-x-6 text-black">
             <li className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block">
               All products
             </li>
-            <li className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block" onClick={() => navigate({to: '/chat'})}>
+            <li
+              className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block"
+              onClick={() => navigate({ to: '/chat' })}
+            >
               Chat
             </li>
-            <li className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block" onClick={() => navigate({to: '/auth'})}>
-              Log in
-            </li>
+            {token ? (
+          <button onClick={handleSignOut} className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block">
+            Sign out
+          </button>
+        ) : (
+          <button
+            onClick={() => navigate({ to: '/auth' })}
+            className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block"
+          >
+            Sign in
+          </button>)}
           </ul>
         </nav>
       </header>

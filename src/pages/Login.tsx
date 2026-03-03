@@ -1,96 +1,93 @@
-import {
-  useForm,
-  FormProvider,
-  Controller
-} from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchema, type FormValues } from "../utils/types";
+import { useForm, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { formSchema, type FormValues } from '../utils/types';
+import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { queryClient } from '../utils/queryClient';
 
-
-export const LoginPage = () => {
-	const API_URL = import.meta.env.REACT_APP_API_URL || "https://dummyjson.com";
-	const methods = useForm<FormValues>({
+export const Login = () => {
+  const navigate = useNavigate();
+  const [authError, setAuthError] = useState(false);
+  const API_URL = import.meta.env.REACT_APP_API_URL || 'https://dummyjson.com';
+  const methods = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    mode: "onChange"
+    mode: 'onChange',
   });
 
   const {
     handleSubmit,
     reset,
-    setError,
-    control,
-    formState: { errors, isValid, isSubmitting }
+    formState: { errors, isValid, isSubmitting },
   } = methods;
 
+  const onSubmit = async (data: FormValues) => {
+    try {
+      setAuthError(false);
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: data.username,
+          password: data.password,
+        }),
+      });
 
-const onSubmit = async (data: FormValues) => {
-  try {
-    const response = await fetch(`${API_URL}/users/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        firstName: data.name,
-        email: data.email,
-        password: data.password
-      })
-    });
+      const result = await response.json();
 
-    if (!response.ok) {
-      throw new Error("Server error");
+      if (!response.ok) {
+        throw new Error(result.message || "Login failed");
+      }
+
+      localStorage.setItem("token", result.accessToken);
+      queryClient.setQueryData(['auth-token'], result.accessToken);
+
+      alert('Authorized successfully!');
+      reset();
+      navigate({ to: "/" });
+    } catch (err) {
+      setAuthError(true);
     }
-
-    const result = await response.json();
-
-    console.log(result);
-    alert("Registered successfully!");
-    reset();
-
-  } catch (err) {
-    setError("email", {
-      type: "server",
-      message: "Registration failed. Please try again."
-    });
-  }
-};
+  };
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>Registration</h2>
+    <>
+      <div className="bg-[#d5b0ac] w-screen h-screen"></div>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-2 w-80 mx-auto mt-20 absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#cea0ae] p-6 rounded-md"
+        >
+          <h2 className="bg-[#684551] text-white text-center p-2 rounded-md">Authorization</h2>
 
-        <input {...methods.register("name")} placeholder="Name" />
-        <p>{errors.name?.message}</p>
+          <input
+            {...methods.register('username')}
+            placeholder="Username"
+            className="border border-gray-300 rounded-md p-2"
+          />
+          <p>{errors.username?.message}</p>
 
-        <input {...methods.register("email")} placeholder="Email" />
-        <p>{errors.email?.message}</p>
+          <input
+            type="password"
+            {...methods.register('password')}
+            placeholder="Password"
+            className="border border-gray-300 rounded-md p-2"
+          />
+          <p>{errors.password?.message}</p>
 
-        <input type="password" {...methods.register("password")} placeholder="Password" />
-        <p>{errors.password?.message}</p>
-
-        <input
-          type="password"
-          {...methods.register("confirmPassword")}
-          placeholder="Confirm password"
-        />
-        <p>{errors.confirmPassword?.message}</p>
-
-        <Controller
-          control={control}
-          name="startDate"
-          render={({ field }) => (
-            <input
-              type="date"
-              onChange={(e) => field.onChange(new Date(e.target.value))}
-            />
+          {authError && (
+            <p className="text-red-600 text-sm text-center">Invalid username or password</p>
           )}
-        />
-        <p>{errors.startDate?.message}</p>
 
-        <button type="submit" disabled={!isValid || isSubmitting}>
-          {isSubmitting ? "Sending..." : "Register"}
-        </button>
-      </form>
-    </FormProvider>
+          <button
+            type="submit"
+            disabled={!isValid || isSubmitting}
+            className="bg-[#684551] text-white border-white px-4 py-2 rounded-md hover:bg-[#9cd08f] transition-colors duration-300"
+          >
+            {isSubmitting ? 'Sending...' : 'Sign in'}
+          </button>
+        </form>
+      </FormProvider>
+    </>
   );
 };
