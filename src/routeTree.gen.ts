@@ -11,27 +11,27 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProductsRouteImport } from './routes/products'
+import { Route as ChatRouteImport } from './routes/chat'
 import { Route as IndexRouteImport } from './routes/index'
 
-const ProductsLazyRouteImport = createFileRoute('/products')()
-const ChatLazyRouteImport = createFileRoute('/chat')()
 const AuthLazyRouteImport = createFileRoute('/auth')()
 
-const ProductsLazyRoute = ProductsLazyRouteImport.update({
-  id: '/products',
-  path: '/products',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/products.lazy').then((d) => d.Route))
-const ChatLazyRoute = ChatLazyRouteImport.update({
-  id: '/chat',
-  path: '/chat',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/chat.lazy').then((d) => d.Route))
 const AuthLazyRoute = AuthLazyRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/auth.lazy').then((d) => d.Route))
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatRoute = ChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -40,59 +40,59 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/chat': typeof ChatRoute
+  '/products': typeof ProductsRoute
   '/auth': typeof AuthLazyRoute
-  '/chat': typeof ChatLazyRoute
-  '/products': typeof ProductsLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/chat': typeof ChatRoute
+  '/products': typeof ProductsRoute
   '/auth': typeof AuthLazyRoute
-  '/chat': typeof ChatLazyRoute
-  '/products': typeof ProductsLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/chat': typeof ChatRoute
+  '/products': typeof ProductsRoute
   '/auth': typeof AuthLazyRoute
-  '/chat': typeof ChatLazyRoute
-  '/products': typeof ProductsLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/chat' | '/products'
+  fullPaths: '/' | '/chat' | '/products' | '/auth'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/chat' | '/products'
-  id: '__root__' | '/' | '/auth' | '/chat' | '/products'
+  to: '/' | '/chat' | '/products' | '/auth'
+  id: '__root__' | '/' | '/chat' | '/products' | '/auth'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChatRoute: typeof ChatRoute
+  ProductsRoute: typeof ProductsRoute
   AuthLazyRoute: typeof AuthLazyRoute
-  ChatLazyRoute: typeof ChatLazyRoute
-  ProductsLazyRoute: typeof ProductsLazyRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products': {
       id: '/products'
       path: '/products'
       fullPath: '/products'
-      preLoaderRoute: typeof ProductsLazyRouteImport
+      preLoaderRoute: typeof ProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/chat': {
       id: '/chat'
       path: '/chat'
       fullPath: '/chat'
-      preLoaderRoute: typeof ChatLazyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthLazyRouteImport
+      preLoaderRoute: typeof ChatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -107,9 +107,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChatRoute: ChatRoute,
+  ProductsRoute: ProductsRoute,
   AuthLazyRoute: AuthLazyRoute,
-  ChatLazyRoute: ChatLazyRoute,
-  ProductsLazyRoute: ProductsLazyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
