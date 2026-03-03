@@ -61,7 +61,7 @@ function Chat() {
           Write to the manager
         </h2>
 
-        <div className="bg-[#cea0ae] h-96 overflow-y-auto p-4 mb-4 rounded-b-md break-words">
+        <div className="bg-[#cea0ae] h-96 overflow-y-auto p-4 mb-4 rounded-b-md wrap-break-word">
           {messages.map((msg) => (
             <div key={msg.id} className="mb-2">
               <div className="text-sm text-gray-700">
