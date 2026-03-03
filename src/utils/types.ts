@@ -21,3 +21,9 @@ export const formSchema = z
 	});
 
 export type FormValues = z.infer<typeof formSchema>;
+
+export interface Message {
+  id: string;
+  text: string;
+  created_at: string;
+}
