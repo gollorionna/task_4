@@ -5,7 +5,7 @@ export const Route = createFileRoute('/')({
   component: MainPage,
 });
 
-function MainPage() {
+export function MainPage() {
   return (
     <>
       <div className=" h-screen w-screen bg-cover bg-center bg-no-repeat relative pt-3.5" style={{ backgroundImage: `url(${image})` }}></div>
