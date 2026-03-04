@@ -1,4 +1,16 @@
-# React + TypeScript + Vite
+# Task_4 for internship
+## Technologies Used:
+1) React + Vite
+2) TanStack Router
+3) Tanstack Query
+4) Tailwind CSS
+5) TypeScript
+6) Zod
+7) WebSocket
+
+## Deployment
+https://gollorionna.github.io/task_4/
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
