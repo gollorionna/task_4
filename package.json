@@ -5,13 +5,15 @@
   "type": "module",
   "homepage": "https://gollorionna.github.io/task_4",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"npm run vite\" \"npm run node\"",
+    "vite": "vite",
+    "node": "node server.js",
     "build": "tsc -b && vite build",
+    "deploy": "vite build && gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "coverage": "vitest run --coverage",
-    "deploy": "vite build && gh-pages -d dist"
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -38,6 +40,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "babel-plugin-react-compiler": "^1.0.0",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
