@@ -35,4 +35,9 @@ export interface Message {
   created_at: string;
 }
 
+export type TokenPayload = {
+    username: string;
+    exp: number;
+  };
+
 

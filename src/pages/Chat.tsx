@@ -1,17 +1,19 @@
-import { useEffect, useRef, useState } from "react";
-import { type Message } from "../utils/types";
+import { useEffect, useRef, useState } from 'react';
+import { type Message } from '../utils/types';
+import { jwtDecode } from 'jwt-decode';
+import { type TokenPayload } from '../utils/types';
 
 function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const socketRef = useRef<WebSocket | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const socket = new WebSocket("wss://ws.ifelse.io");
+    const socket = new WebSocket('wss://ws.ifelse.io');
 
     socket.onopen = () => {
-      console.log("Connected to WebSocket server");
+      console.log('Connected to WebSocket server');
     };
 
     socket.onmessage = (event) => {
@@ -20,11 +22,11 @@ function Chat() {
     };
 
     socket.onerror = (error) => {
-      console.error("WebSocket error:", error);
+      console.error('WebSocket error:', error);
     };
 
     socket.onclose = () => {
-      console.log("WebSocket connection closed");
+      console.log('WebSocket connection closed');
     };
 
     socketRef.current = socket;
@@ -35,7 +37,7 @@ function Chat() {
   }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   function sendMessage() {
@@ -49,7 +51,18 @@ function Chat() {
     };
 
     socketRef.current.send(JSON.stringify(message));
-    setInput("");
+    setInput('');
+  }
+
+  
+
+  const token = localStorage.getItem('token');
+
+  let username = 'Anonymous';
+
+  if (token) {
+    const decoded = jwtDecode<TokenPayload>(token);
+    username = decoded.username;
   }
 
   return (
@@ -65,7 +78,7 @@ function Chat() {
           {messages.map((msg) => (
             <div key={msg.id} className="mb-2">
               <div className="text-sm text-gray-700">
-                <strong>User</strong>
+                <strong>{username}</strong>
                 <span className="ml-2 text-xs text-gray-500">
                   {new Date(msg.created_at).toLocaleTimeString()}
                 </span>
