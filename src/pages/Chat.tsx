@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { type Message } from '../utils/types';
 import { jwtDecode } from 'jwt-decode';
 import { type TokenPayload } from '../utils/types';
+import { Button } from '@/components/ui/button';
 
 function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -103,12 +104,12 @@ function Chat() {
             onChange={(e) => setInput(e.target.value)}
           />
 
-          <button
+          <Button
             type="submit"
-            className="bg-[#684551] text-white border-white px-4 py-2 rounded-md hover:bg-[#9cd08f] transition-colors duration-300"
+            size="lg" variant="submit"
           >
             Send
-          </button>
+          </Button>
         </form>
       </div>
     </>

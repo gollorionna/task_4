@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { GiShop } from 'react-icons/gi';
 import { useAuthToken } from '../utils/authQuery';
 import { queryClient } from '../utils/queryClient';
+import { Button } from '@/components/ui/button';
 
 export const Route = createRootRoute({
   component: Layout,
@@ -25,26 +26,26 @@ function Layout() {
         </Link>
         <nav className="flex">
           <ul className="flex space-x-6 text-black">
-            <li className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block" onClick={() => navigate({ to: '/products' })}>
+            <Button size="lg" variant="default" onClick={() => navigate({ to: '/products' })}>
               All products
-            </li>
-            <li
-              className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block"
+            </Button>
+            <Button
+              size="lg" variant="default"
               onClick={() => navigate({ to: '/chat' })}
             >
               Chat
-            </li>
+            </Button>
             {token ? (
-          <button onClick={handleSignOut} className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block">
+          <Button onClick={handleSignOut} size="lg" variant="default">
             Sign out
-          </button>
+          </Button>
         ) : (
-          <button
+          <Button
             onClick={() => navigate({ to: '/auth' })}
-            className="bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block"
+            size="lg" variant="default"
           >
             Sign in
-          </button>)}
+          </Button>)}
           </ul>
         </nav>
       </header>
