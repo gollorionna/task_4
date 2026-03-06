@@ -11,6 +11,10 @@
 ## Deployment
 https://gollorionna.github.io/task_4/
 
+## Login and Password for authorizaton:
+username: emilys
+password: emilyspass
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
