@@ -4,9 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run vite\" \"npm run node\"",
+    "dev": "npm run vite",
     "vite": "vite",
-    "node": "node server.js",
     "build": "tsc -b && vite build",
     "deploy": "vite build && gh-pages -d dist",
     "lint": "eslint .",

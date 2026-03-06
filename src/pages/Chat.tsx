@@ -8,7 +8,7 @@ function Chat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080");
+    const socket = new WebSocket("wss://ws.ifelse.io");
 
     socket.onopen = () => {
       console.log("Connected to WebSocket server");
