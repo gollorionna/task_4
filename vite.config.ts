@@ -5,7 +5,6 @@ import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/task_4/',
   server: {
     watch: {
       usePolling: false,
