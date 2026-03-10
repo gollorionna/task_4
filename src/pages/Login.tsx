@@ -53,8 +53,6 @@ export const Login = () => {
     }
   };
   return (
-    <>
-      <div className="bg-[#d5b0ac] w-screen h-screen"></div>
       <FormProvider {...methods}>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -95,6 +93,5 @@ export const Login = () => {
           </button>
         </form>
       </FormProvider>
-    </>
   );
 };

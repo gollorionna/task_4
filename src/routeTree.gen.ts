@@ -14,6 +14,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductIdRouteImport } from './routes/product.$id'
 
 const AuthLazyRouteImport = createFileRoute('/auth')()
 
@@ -37,18 +38,25 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductIdRoute = ProductIdRouteImport.update({
+  id: '/product/$id',
+  path: '/product/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/products': typeof ProductsRoute
   '/auth': typeof AuthLazyRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/products': typeof ProductsRoute
   '/auth': typeof AuthLazyRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -56,13 +64,14 @@ export interface FileRoutesById {
   '/chat': typeof ChatRoute
   '/products': typeof ProductsRoute
   '/auth': typeof AuthLazyRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/products' | '/auth'
+  fullPaths: '/' | '/chat' | '/products' | '/auth' | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/products' | '/auth'
-  id: '__root__' | '/' | '/chat' | '/products' | '/auth'
+  to: '/' | '/chat' | '/products' | '/auth' | '/product/$id'
+  id: '__root__' | '/' | '/chat' | '/products' | '/auth' | '/product/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -70,6 +79,7 @@ export interface RootRouteChildren {
   ChatRoute: typeof ChatRoute
   ProductsRoute: typeof ProductsRoute
   AuthLazyRoute: typeof AuthLazyRoute
+  ProductIdRoute: typeof ProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -102,6 +112,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/product/$id': {
+      id: '/product/$id'
+      path: '/product/$id'
+      fullPath: '/product/$id'
+      preLoaderRoute: typeof ProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -110,6 +127,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChatRoute: ChatRoute,
   ProductsRoute: ProductsRoute,
   AuthLazyRoute: AuthLazyRoute,
+  ProductIdRoute: ProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

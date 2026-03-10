@@ -67,9 +67,6 @@ function Chat() {
   }
 
   return (
-    <>
-      <div className="bg-[#d5b0ac] p-4 w-screen h-screen"></div>
-
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96">
         <h2 className="bg-[#684551] text-white text-2xl text-center p-2 rounded-t-md">
           Write to the manager
@@ -112,7 +109,6 @@ function Chat() {
           </Button>
         </form>
       </div>
-    </>
   );
 }
 

@@ -10,6 +10,7 @@ export const formSchema = z
   id: z.number(),
   title: z.string(),
   description: z.string(),
+  images: z.array(z.string()).optional(),
   price: z.number(),
   category: z.string(),
   thumbnail: z.string(),

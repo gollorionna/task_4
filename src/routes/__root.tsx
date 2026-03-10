@@ -20,7 +20,7 @@ function Layout() {
   };
   return (
     <>
-      <header className="absolute top-0 left-0 w-full z-50 flex justify-between items-center h-16 px-5">
+      <header className="absolute top-0 left-0 w-full z-50 flex justify-between items-center h-16 px-5 wrap">
         <Link to="/">
           <GiShop className="text-[#9cd08f] bg-[#684551] rounded-2xs w-12 h-12 hover:underline cursor-pointer hover:text-green-600 hover:transition-colors duration-300" />
         </Link>
@@ -29,28 +29,23 @@ function Layout() {
             <Button size="lg" variant="default" onClick={() => navigate({ to: '/products' })}>
               All products
             </Button>
-            <Button
-              size="lg" variant="default"
-              onClick={() => navigate({ to: '/chat' })}
-            >
+            <Button size="lg" variant="default" onClick={() => navigate({ to: '/chat' })}>
               Chat
             </Button>
             {token ? (
-          <Button onClick={handleSignOut} size="lg" variant="default">
-            Sign out
-          </Button>
-        ) : (
-          <Button
-            onClick={() => navigate({ to: '/auth' })}
-            size="lg" variant="default"
-          >
-            Sign in
-          </Button>)}
+              <Button onClick={handleSignOut} size="lg" variant="default">
+                Sign out
+              </Button>
+            ) : (
+              <Button onClick={() => navigate({ to: '/auth' })} size="lg" variant="default">
+                Sign in
+              </Button>
+            )}
           </ul>
         </nav>
       </header>
 
-      <main>
+      <main className="min-h-screen w-full flex justify-center items-center">
         <Suspense
           fallback={
             <div className="mt-10 flex justify-center">

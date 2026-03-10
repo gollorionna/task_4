@@ -25,9 +25,9 @@ export const ProductCardList = () => {
     <div className="bg-[#d5b0ac]">
       <div className="flex flex-wrap justify-center gap-6 p-4 pt-20">
         {products.map((p) => (
-          <Card
+          <Card className='w-72'
             key={p.id}
-            onClick={() => navigate({ to: `/products/${p.id}` })}
+            onClick={() => navigate({ to: `/product/${p.id}` })}
           >
             <img src={p.thumbnail} alt={p.title} className="h-48 w-full object-contain p-4" />
 
