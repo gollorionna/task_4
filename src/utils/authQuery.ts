@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryClient } from './queryClient';
 
 export const useAuthToken = () => {
   return useQuery({
     queryKey: ['auth-token'],
-    queryFn: () => localStorage.getItem('token'),
+    queryFn: getAuthToken,
     staleTime: Infinity,
-    initialData: () => queryClient.getQueryData(['auth-token']),
   });
 };
+
+export const getAuthToken = () => localStorage.getItem('token');
+
