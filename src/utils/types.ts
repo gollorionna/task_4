@@ -41,4 +41,10 @@ export type TokenPayload = {
     exp: number;
   };
 
+export interface ProductCardCreatorProps {
+  products: Product[];
+  containerClassName?: string;
+  cardClassName?: string;
+}
+
 
