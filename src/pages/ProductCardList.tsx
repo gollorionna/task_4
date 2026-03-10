@@ -1,23 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
-import type { Product } from '../utils/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useGetProducts } from '@/utils/useGetProducts';
 
-const fetchProducts = async (): Promise<Product[]> => {
-  const API_URL = import.meta.env.REACT_APP_API_URL || 'https://dummyjson.com';
-  const res = await fetch(`${API_URL}/products`);
-  const data = await res.json();
-  return data.products;
-};
 
 export const ProductCardList = () => {
   const navigate = useNavigate();
 
-  const { data: products = [], isLoading } = useQuery({
-    queryKey: ['products'],
-    queryFn: fetchProducts,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: products = [], isLoading } = useGetProducts();
 
   if (isLoading) return <p>Loading...</p>;
 
