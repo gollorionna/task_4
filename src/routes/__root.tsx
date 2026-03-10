@@ -22,7 +22,7 @@ function Layout() {
     <>
       <header className="absolute top-0 left-0 w-full z-50 flex justify-between items-center h-16 px-5 wrap">
         <Link to="/">
-          <GiShop className="text-[#9cd08f] bg-[#684551] rounded-2xs w-12 h-12 hover:underline cursor-pointer hover:text-green-600 hover:transition-colors duration-300" />
+          <GiShop className="text-(--green-bg) bg-(--brown-bg) rounded-2xs w-12 h-12 hover:underline cursor-pointer hover:text-green-600 hover:transition-colors duration-300" />
         </Link>
         <nav className="flex">
           <ul className="flex space-x-6 text-black">

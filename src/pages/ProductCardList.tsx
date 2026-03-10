@@ -22,7 +22,7 @@ export const ProductCardList = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div className="bg-[#d5b0ac]">
+    <div className="min-h-screen">
       <div className="flex flex-wrap justify-center gap-6 p-4 pt-20">
         {products.map((p) => (
           <Card className='w-72'

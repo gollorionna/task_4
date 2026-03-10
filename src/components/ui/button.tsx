@@ -10,16 +10,16 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-[#9cd08f] px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block cursor-pointer",
+          "bg-(--green-bg) px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 inline-block cursor-pointer",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-[#1d221c] text-white  rounded-md cursor-pointer hover:bg-green-600 transition-colors duration-300",
+          "bg-(--secondary-bg) text-white  rounded-md cursor-pointer hover:bg-green-600 transition-colors duration-300",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        submit: "bg-[#684551] text-white border-white px-4 py-2 rounded-md hover:bg-[#9cd08f] transition-colors duration-300"
+        submit: "bg-(--brown-bg) text-white border-white px-4 py-2 rounded-md hover:bg-(--green-bg) transition-colors duration-300"
       },
       size: {
         default: "h-9 px-4 py-2",

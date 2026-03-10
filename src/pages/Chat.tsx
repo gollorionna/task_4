@@ -68,11 +68,11 @@ function Chat() {
 
   return (
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96">
-        <h2 className="bg-[#684551] text-white text-2xl text-center p-2 rounded-t-md">
+        <h2 className="bg-(--brown-bg) text-white text-2xl text-center p-2 rounded-t-md">
           Write to the manager
         </h2>
 
-        <div className="bg-[#cea0ae] h-96 overflow-y-auto p-4 mb-4 rounded-b-md wrap-break-word">
+        <div className="bg-(--pink-bg) h-96 overflow-y-auto p-4 mb-4 rounded-b-md wrap-break-word">
           {messages.map((msg) => (
             <div key={msg.id} className="mb-2">
               <div className="text-sm text-gray-700">
@@ -95,7 +95,7 @@ function Chat() {
           className="flex gap-2"
         >
           <input
-            className="bg-[#684551] border border-white rounded-md p-2 text-white flex-1"
+            className="bg-(--brown-bg) border border-white rounded-md p-2 text-white flex-1"
             value={input}
             placeholder="Type a message..."
             onChange={(e) => setInput(e.target.value)}

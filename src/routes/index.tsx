@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import image from '../assets/Mask_Group.webp';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/')({
@@ -9,8 +8,8 @@ export const Route = createFileRoute('/')({
 export function MainPage() {
   return (
     <>
-      <div className=" h-screen w-screen bg-cover bg-center bg-no-repeat relative pt-3.5" style={{ backgroundImage: `url(${image})` }}></div>
-      <div className="absolute top-40 left-170 bg-[#9cd08f]/80 rounded-tr-2xl rounded-bl-2xl p-6 w-1/2 text-center leading-7 max-w-160">
+      <div className="bg-[url(/Mask_Group.webp)] h-screen w-screen bg-cover bg-center bg-no-repeat relative pt-3.5"></div>
+      <div className="absolute top-40 left-170 bg-(--green-bg)/80 rounded-tr-2xl rounded-bl-2xl p-6 w-1/2 text-center leading-7 max-w-160">
         <p>New Arrival</p>
         <h1 className="text-2xl font-bold">Discover Our New Collection</h1>
         <p>

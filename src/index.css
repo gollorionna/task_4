@@ -91,11 +91,15 @@ body {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --green-bg: #9cd08f;
+  --brown-bg: #684551;
+  --secondary-bg: #1d221c ;
+  --pink-bg:#cea0ae;
+  --light-pink-bg: #d5b0ac;
 }
 
 body {
   margin: 0;
-  /* display: flex; */
   min-width: 320px;
   min-height: 100vh;
 }
