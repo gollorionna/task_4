@@ -1,7 +1,7 @@
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, type FormValues } from '../utils/types';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { queryClient } from '../utils/queryClient';
 import { Input } from '@/components/ui/input';
@@ -9,8 +9,6 @@ import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 
 export const Login = () => {
   const navigate = useNavigate();
-  const [authError, setAuthError] = useState(false);
-  const API_URL = import.meta.env.REACT_APP_API_URL || 'https://dummyjson.com';
   const methods = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -19,39 +17,43 @@ export const Login = () => {
   const {
     handleSubmit,
     reset,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid },
   } = methods;
 
-  const onSubmit = async (data: FormValues) => {
-    try {
-      setAuthError(false);
-      const response = await fetch(`${API_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: data.username,
-          password: data.password,
-        }),
-      });
+  const API_URL = import.meta.env.REACT_APP_API_URL || 'https://dummyjson.com';
 
-      const result = await response.json();
+  const loginUser = async (data: FormValues) => {
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: data.username,
+        password: data.password,
+      }),
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      throw new Error(result.message || 'Login failed');
+    }
+    return result;
+  };
 
-      if (!response.ok) {
-        throw new Error(result.message || 'Login failed');
-      }
-
-      localStorage.setItem('token', result.accessToken);
-      queryClient.setQueryData(['auth-token'], result.accessToken);
-
-      alert('Authorized successfully!');
+  const mutation = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      localStorage.setItem('token', data.accessToken);
+      queryClient.setQueryData(['auth-token'], data.accessToken);
       reset();
       navigate({ to: '/' });
-    } catch (err) {
-      setAuthError(true);
     }
+  })
+
+  const onSubmit = async (data: FormValues) => {
+      mutation.mutate(data);
   };
+
   return (
       <FormProvider {...methods}>
         <form
@@ -72,24 +74,24 @@ export const Login = () => {
           <Field>
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input
+            {...methods.register('password')}
               id="password"
               type="password"
-              {...methods.register('password')}
               placeholder="........"
             />
             <FieldError>{errors.password?.message}</FieldError>
           </Field>
 
-          {authError && (
+          {mutation.status === 'error' && (
             <p className="text-red-600 text-sm text-center">Invalid username or password</p>
           )}
 
           <button
             type="submit"
-            disabled={!isValid || isSubmitting}
+            disabled={!isValid || mutation.status === 'pending'}
             className="bg-(--brown-bg) text-white border-white px-4 py-2 rounded-md hover:bg-(--green-bg) transition-colors duration-300"
           >
-            {isSubmitting ? 'Sending...' : 'Sign in'}
+            {mutation.status === 'pending' ? 'Sending...' : 'Sign in'}
           </button>
         </form>
       </FormProvider>
