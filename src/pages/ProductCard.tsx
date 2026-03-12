@@ -1,6 +1,6 @@
 import { useParams } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ProductSchema } from '@/utils/types';
 
 import type { Product } from '@/utils/types';
@@ -32,18 +32,18 @@ export const ProductCard = () => {
 
   return (
     <div className='w-full max-w-6xl px-4'>
-      <Card className= "w-full shadow-xl flex flex-col sm:flex-col overflow-hidden ">
-          <div className="flex p-6 ">
+      <Card className= "w-full shadow-xl overflow-hidden sm:mt-0 mt-20">
+          <div className="flex flex-col md:flex-row p-6 gap-6">
             <img
               src={product.images?.[0]}
               alt={product.title}
-              className="max-h-100 object-contain  rounded-lg"
+              className="max-h-100 object-contain rounded-lg md:w-1/2 w-70"
             />
 
           <CardContent className="flex flex-col justify-center gap-6 md:w-1/2">
-            <h1 className="text-3xl font-bold">{product.title}</h1>
-            <p className="text-4xl font-semibold text-primary">${product.price}</p>
-            <p className="text-muted-foreground leading-relaxed">{product.description}</p>
+            <CardTitle className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">{product.title}</CardTitle>
+            <CardDescription className="text-4xl font-semibold text-primary">{product.price}$</CardDescription>
+            <CardDescription className="text-muted-foreground leading-relaxed">{product.description}</CardDescription>
           </CardContent>
         </div>
       </Card>
