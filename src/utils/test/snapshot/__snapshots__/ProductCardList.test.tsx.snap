@@ -1,0 +1,80 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProductCardList snapshots > matches loading snapshot 1`] = `
+<div>
+  <p>
+    Loading...
+  </p>
+</div>
+`;
+
+exports[`ProductCardList snapshots > matches products snapshot 1`] = `
+<div>
+  <div
+    class="min-h-screen"
+  >
+    <div
+      class="flex flex-wrap justify-center gap-6 p-4 pt-20"
+    >
+      <div
+        class="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-2xl flex flex-col cursor-pointer w-72"
+      >
+        <img
+          alt="Essence Mascara Lash Princess"
+          class="h-48 w-full object-contain p-4"
+          src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
+        />
+        <div
+          class="flex flex-col space-y-1.5 p-6 pt-0"
+        >
+          <div
+            class="font-semibold tracking-tight text-gray-900"
+          >
+            Essence Mascara Lash Princess
+          </div>
+          <div
+            class="font-semibold text-base text-foreground"
+          >
+            9.99
+            $
+          </div>
+        </div>
+        <div
+          class="p-5 pt-0 pb-3 text-gray-700 text-sm"
+        >
+          The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effe...
+        </div>
+      </div>
+      <div
+        class="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-2xl flex flex-col cursor-pointer w-72"
+      >
+        <img
+          alt="Eyeshadow Palette with Mirror"
+          class="h-48 w-full object-contain p-4"
+          src="https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/1.webp"
+        />
+        <div
+          class="flex flex-col space-y-1.5 p-6 pt-0"
+        >
+          <div
+            class="font-semibold tracking-tight text-gray-900"
+          >
+            Eyeshadow Palette with Mirror
+          </div>
+          <div
+            class="font-semibold text-base text-foreground"
+          >
+            899
+            $
+          </div>
+        </div>
+        <div
+          class="p-5 pt-0 pb-3 text-gray-700 text-sm"
+        >
+          The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
