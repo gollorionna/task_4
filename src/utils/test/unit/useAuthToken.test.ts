@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { getAuthToken } from '../authQuery';
+import { getAuthToken } from '../../authQuery';
 
 describe('getAuthToken', () => {
   beforeEach(() => {
