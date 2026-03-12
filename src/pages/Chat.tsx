@@ -67,7 +67,7 @@ function Chat() {
   }
 
   return (
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 sm:w-96">
         <h2 className="bg-(--brown-bg) text-white text-2xl text-center p-2 rounded-t-md">
           Write to the manager
         </h2>
@@ -95,7 +95,7 @@ function Chat() {
           className="flex gap-2"
         >
           <input
-            className="bg-(--brown-bg) border border-white rounded-md p-2 text-white flex-1"
+            className="bg-(--brown-bg) border border-white rounded-md p-2 text-white flex-1 sm:text-md text-sm"
             value={input}
             placeholder="Type a message..."
             onChange={(e) => setInput(e.target.value)}

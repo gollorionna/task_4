@@ -28,7 +28,7 @@ function Layout() {
           <GiShop className="text-(--green-bg) bg-(--brown-bg) rounded-2xs w-12 h-12 hover:underline cursor-pointer hover:text-green-600 hover:transition-colors duration-300" />
         </Link>
         <button className='block min-[500px]:hidden' onClick={() => setMenuOpen(!menuOpen)}>
-          <GiHamburgerMenu color='#684551' size={28} />
+          <GiHamburgerMenu size={28} />
         </button>
 
         <nav className="hidden min-[500px]:flex">
@@ -53,7 +53,7 @@ function Layout() {
       </header>
 
       {menuOpen && (
-        <div className="z-50 absolute top-16 left-0 w-full bg-(--brown-bg) opacity-90 rounded-md shadow-md flex flex-col items-center gap-4 py-4 min-[500px]:hidden">
+        <div className="z-30 absolute left-0 w-full bg-(--brown-bg) opacity-90 rounded-md shadow-md flex flex-col items-center gap-4 py-4 pt-15 min-[500px]:hidden">
           <Button onClick={() => navigate({ to: '/products' })}>
             All products
           </Button>
