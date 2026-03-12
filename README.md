@@ -9,7 +9,7 @@
 7) WebSocket
 
 ## Deployment
-https://gollorionna.github.io/task_4/
+[https://gollorionna.github.io/task_4/](https://task4shop-exksa834h-daineko0404-6755s-projects.vercel.app/#/)
 
 ## Login and Password for authorizaton:
 username: emilys
