@@ -20,10 +20,8 @@ export const Login = () => {
     formState: { errors, isValid },
   } = methods;
 
-  const API_URL = import.meta.env.REACT_APP_API_URL || 'https://dummyjson.com';
-
   const loginUser = async (data: FormValues) => {
-    const response = await fetch(`${API_URL}/auth/login`, {
+    const response = await fetch(`${import.meta.env.REACT_APP_API_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
