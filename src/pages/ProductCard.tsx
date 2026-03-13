@@ -1,16 +1,6 @@
 import { useParams } from '@tanstack/react-router';
-import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
-import { ProductSchema } from '@/utils/types';
-
-import type { Product } from '@/utils/types';
-
-const fetchProduct = async (id: number): Promise<Product> => {
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/products/${id}`);
-  if (!res.ok) throw new Error('Failed to fetch product');
-  const data = await res.json();
-  return ProductSchema.parse(data);
-};
+import { useProduct } from '@/utils/hooks/useProductCard';
 
 export const ProductCard = () => {
   const { id } = useParams({ strict: false });
@@ -19,10 +9,7 @@ export const ProductCard = () => {
     data: product,
     isLoading,
     error,
-  } = useQuery({
-    queryKey: ['product', id],
-    queryFn: () => fetchProduct(Number(id)),
-  });
+  } = useProduct(Number(id));
 
   if (isLoading) return <p className="flex items-center justify-center min-h-screen">Loading...</p>;
   if (error) return <p className="flex items-center justify-center min-h-screen text-red-500">Error loading product</p>;

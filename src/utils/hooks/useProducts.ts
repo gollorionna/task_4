@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import type { Product } from './types';
+import type { Product } from '../types';
 
 const fetchProducts = async (): Promise<Product[]> => {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/products`);
@@ -8,7 +8,7 @@ const fetchProducts = async (): Promise<Product[]> => {
   return data.products;
 };
 
-export const useGetProducts = () => {
+export const useProducts = () => {
   return useQuery({
     queryKey: ['products'],
     queryFn: fetchProducts,

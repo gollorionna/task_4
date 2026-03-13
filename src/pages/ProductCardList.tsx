@@ -1,12 +1,10 @@
-import { useGetProducts } from '@/utils/useGetProducts';
+import { useProducts } from '@/utils/hooks/useProducts';
 import { ProductCardCreator } from '@/components/ProductCardCreator';
 
-
 export const ProductCardList = () => {
-
-  const { data: products = [], isLoading } = useGetProducts();
+  const { data: products = [], isLoading } = useProducts();
 
   if (isLoading) return <p>Loading...</p>;
 
-  return <ProductCardCreator products = {products} />;
+  return <ProductCardCreator products={products} />;
 };

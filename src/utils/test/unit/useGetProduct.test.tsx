@@ -2,15 +2,14 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { useGetProducts } from '../../useGetProducts';
+import { useProducts } from '@/utils/hooks/useProducts';
 
 const mockProducts = [
   { id: 1, title: 'Phone' },
   { id: 2, title: 'Laptop' },
 ];
 
-describe('useGetProducts', () => {
-
+describe('useProducts', () => {
   beforeEach(() => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       json: async () => ({
@@ -29,14 +28,12 @@ describe('useGetProducts', () => {
     });
 
     return ({ children }: { children: React.ReactNode }) => (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
   };
 
   it('should fetch products successfully', async () => {
-    const { result } = renderHook(() => useGetProducts(), {
+    const { result } = renderHook(() => useProducts(), {
       wrapper: createWrapper(),
     });
 
@@ -46,8 +43,6 @@ describe('useGetProducts', () => {
 
     expect(result.current.data).toEqual(mockProducts);
 
-    expect(fetch).toHaveBeenCalledWith(
-      'https://dummyjson.com/products'
-    );
+    expect(fetch).toHaveBeenCalledWith('https://dummyjson.com/products');
   });
 });

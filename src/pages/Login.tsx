@@ -1,14 +1,11 @@
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, type FormValues } from '../utils/types';
-import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
-import { queryClient } from '../utils/queryClient';
 import { Input } from '@/components/ui/input';
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
+import { useLogin } from '@/utils/hooks/useLogin';
 
 export const Login = () => {
-  const navigate = useNavigate();
   const methods = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -20,35 +17,9 @@ export const Login = () => {
     formState: { errors, isValid },
   } = methods;
 
-  const loginUser = async (data: FormValues) => {
-    const response = await fetch(`${import.meta.env.REACT_APP_API_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: data.username,
-        password: data.password,
-      }),
-    });
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.message || 'Login failed');
-    }
-    return result;
-  };
+    const mutation = useLogin(() => reset());
 
-  const mutation = useMutation({
-    mutationFn: loginUser,
-    onSuccess: (data) => {
-      localStorage.setItem('token', data.accessToken);
-      queryClient.setQueryData(['auth-token'], data.accessToken);
-      reset();
-      navigate({ to: '/' });
-    }
-  })
-
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = (data: FormValues) => {
       mutation.mutate(data);
   };
 
